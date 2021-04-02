@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -161,12 +163,29 @@ public class MainActivity extends AppCompatActivity {
 //        startTime = SystemClock.uptimeMillis();
 //        customHandler.postDelayed(updateTimerThread, 0);
 //
-//        polzSogl();
+        polzSogl();
 
 
 
     }
 
+// Сообщение о том что Пользовательское соглашение нарушено
+    void polzSogl(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Внимание!")
+                .setMessage("Приложение использует определение координат в фоновом режиме. (The app uses coordinate detection in the background)" )
+                .setIcon(R.drawable.sos1)
+                .setCancelable(false)
+                .setNegativeButton("ОК",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
 // Округление чисел: Метод Math.round()
 // https://www.internet-technologies.ru/articles/kak-v-java-okruglit-chislo-do-n-znakov-posle-zapyatoy.html
@@ -225,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
             m.setTo(toArr);
             m.setFrom("sos.mainfrend@gmail.com");
             m.setSubject("SOS");
-            m.setBody("Это Я " + name + " - " + text);
+            m.setBody(name + " - " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.");
 // Вложение файла заремлено
             try {
                 //m.addAttachment(strFilePathA);
@@ -264,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
             m.setTo(toArr);
             m.setFrom("sos.mainfrend@gmail.com");
             m.setSubject("SOS");
-            m.setBody("Это Я " + name + " - " + text);
+            m.setBody(name + " - " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.");
 // Вложение файла заремлено
             try {
                 //m.addAttachment(strFilePathA);
@@ -353,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
     void upSms1() {
         Date da = new Date();
         final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
-        String message = " нажата кнопка SOS " + vrem + " " + text;
+        String message = " нажата кнопка SOS " + vrem + " " + name + " " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.";
         String phoneNo1 = numberPhone1;
         if (!TextUtils.isEmpty(phoneNo1)) {
             //System.out.println("1phoneNo= " + phoneNo1);
@@ -377,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
     void upSms2() {
         Date da = new Date();
         final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
-        String message = " нажата кнопка SOS " + vrem + " " + text;
+        String message = " нажата кнопка SOS " + vrem + " " + name + " " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.";
         String phoneNo2 = numberPhone2;
 
         if (!TextUtils.isEmpty(phoneNo2)) {
