@@ -16,6 +16,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
@@ -35,6 +36,12 @@ import java.util.List;
 // Вот альтернативная версия, которая также работает для меня и имеет вложения
 
 public class MainActivity extends AppCompatActivity {
+
+    private long startTime = 0L;
+    private Handler customHandler = new Handler();
+    long timeInMilliseconds = 0L;
+    long timeSwapBuff = 0L;
+    long updatedTime = 0L;
 
     SharedPreferences mySP11;
     SharedPreferences mySP12;
@@ -200,6 +207,8 @@ public class MainActivity extends AppCompatActivity {
     // Кнопка SOS
     public void onClick1(View view) {
 
+
+
 // Смена картинки кнопки
         if(ttt == false){
             ttt = !ttt;
@@ -219,6 +228,11 @@ public class MainActivity extends AppCompatActivity {
             // все что нужно введено - ничего делать не нужно
             //Toast.makeText(this, " 2 нужно заполнить хотябы одно поле в настройках ", Toast.LENGTH_LONG).show();
         }
+
+        // Старт таймера
+        startTime = SystemClock.uptimeMillis();
+        customHandler.postDelayed(updateTimerThread, 0);
+
 
         if(!numberPhone1.equals(""))
             upSms1();
@@ -457,6 +471,62 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Main1Activity.class);
         startActivity(intent);
         finish();
+    }
+
+
+// Таймер
+
+    private Runnable updateTimerThread = new Runnable() {
+        public void run() {
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            updatedTime = timeSwapBuff + timeInMilliseconds;
+
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            secs = secs % 60;
+            int milliseconds = (int) (updatedTime % 1000);
+            TextView textView2 = (TextView) findViewById(R.id.textView2);
+            //textView2.setText("" + mins + ":" + String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
+            textView2.setText("" + mins + ":" + String.format("%02d", secs));
+
+            customHandler.postDelayed(this, 0);
+
+            if (secs >= 3) {   // step
+// Сканируем GPS Каждые 3 секунды
+                startTime = 0L;
+                customHandler.removeCallbacks(updateTimerThread);
+                //scanGps();
+                koordinatyOK();
+                startTime = SystemClock.uptimeMillis();
+                customHandler.postDelayed(updateTimerThread, 0);
+            }
+        }
+    };
+
+    void koordinatyOK(){
+        TextView textView2a = (TextView) findViewById(R.id.textView2a);
+        String tempA = textView2a.getText().toString();
+
+        if(tempA.equals("широта")){
+            // координат еще нет
+//            TextView textView2 = (TextView) findViewById(R.id.textView2);
+//            textView2.setText(" - ");
+        }else {
+            // координаты есть
+            startTime = 0L;
+            customHandler.removeCallbacks(updateTimerThread);
+//            TextView textView3a = (TextView) findViewById(R.id.textView3a);
+//            textView3a.setText("OK");
+            if(!numberPhone1.equals(""))
+                upSms1();
+            if(!numberPhone2.equals(""))
+                upSms2();
+            if(!email1.equals(""))
+                new AsyncRequest1().execute("123", "/ajax", "foo=bar");
+            if(!email2.equals(""))
+                new AsyncRequest2().execute("123", "/ajax", "foo=bar");
+        }
+
     }
 
 }

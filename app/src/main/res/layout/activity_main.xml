@@ -123,6 +123,17 @@
             android:textColor="@android:color/background_light" />
 
         <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="00.00"
+            android:textColor="@android:color/background_light" />
+
+        <TextView
             android:id="@+id/textView3a"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
