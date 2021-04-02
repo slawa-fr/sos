@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">sos</string>
+    <string name="app_name">SOS</string>
+
+    <string name="phoneNumber1">Укажите номера двух телефонов, на которые будут приходить СМС-сообщения при нажатии на кнопку SOS</string>
+    <string name="phoneEmail1">Укажите два E-mail на которые будут приходить сообщения при нажатии на кнопку SOS</string>
+    <string name="name"> Ваше имя </string>
+    <string name="text"> Текст сообщения </string>
+
 </resources>
