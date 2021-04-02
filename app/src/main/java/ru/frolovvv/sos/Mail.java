@@ -1,5 +1,6 @@
 package ru.frolovvv.sos;
 
+
 import java.util.Date;
 import java.util.Properties;
 import javax.activation.CommandMap;
