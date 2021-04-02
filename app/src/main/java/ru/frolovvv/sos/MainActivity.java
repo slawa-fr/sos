@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     public static  String email2;
     public static  String name;
     public static  String text;
+    public static  String message;
+
+
     public double latGps;
     public double lonGps;
 
@@ -372,7 +375,15 @@ public class MainActivity extends AppCompatActivity {
     void upSms1() {
         Date da = new Date();
         final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
-        String message = " нажата кнопка SOS " + vrem + " " + name + " " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.";
+        //String message = " нажата кнопка SOS " + vrem + " " + name + " " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.";
+        if(String.valueOf(latGps) == null && String.valueOf(lonGps) == null){
+            message = " нажата кнопка SOS " + vrem + " " + name + " " + text;
+        }else {
+            message = name + " здесь: " + latGps + " с.ш." + lonGps + " в.д.";
+        }
+
+
+
         String phoneNo1 = numberPhone1;
         if (!TextUtils.isEmpty(phoneNo1)) {
             //System.out.println("1phoneNo= " + phoneNo1);
@@ -396,7 +407,11 @@ public class MainActivity extends AppCompatActivity {
     void upSms2() {
         Date da = new Date();
         final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
-        String message = " нажата кнопка SOS " + vrem + " " + name + " " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.";
+        if(String.valueOf(latGps) == null && String.valueOf(lonGps) == null){
+            message = " нажата кнопка SOS " + vrem + " " + name + " " + text;
+        }else {
+            message = name + " здесь: " + latGps + " с.ш." + lonGps + " в.д.";
+        }
         String phoneNo2 = numberPhone2;
 
         if (!TextUtils.isEmpty(phoneNo2)) {
