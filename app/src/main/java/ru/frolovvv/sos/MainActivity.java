@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     public static  String email2;
     public static  String name;
     public static  String text;
+    public double latGps;
+    public double lonGps;
 
     public boolean ttt;  // Переменная для смены картики при нажатии кнопки ImageView
 
@@ -103,6 +110,70 @@ public class MainActivity extends AppCompatActivity {
         textView22.setText("тел. 2: " + numberPhone2);
         textView23.setText("E-mail 1: " + email1);
         textView24.setText("E-mail 2: " + email2);
+
+// Широта и долшота
+        TextView textView2a = (TextView) findViewById(R.id.textView2a);
+        TextView textView3a = (TextView) findViewById(R.id.textView3a);
+
+
+
+// gps
+// http://streletzcoder.ru/rabotaem-s-gps-v-android-na-java/
+
+        LocationListener listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                // округление до 3-х знаков используя метод roundAvoid
+                double lat = roundAvoid(location.getLatitude(), 3);
+                double lon = roundAvoid(location.getLongitude(), 3);
+                TextView textView2a = (TextView) findViewById(R.id.textView2a);
+                textView2a.setText(String.valueOf(lat));
+                TextView textView3a = (TextView) findViewById(R.id.textView3a);
+                textView3a.setText(String.valueOf(lon));
+                latGps = lat;
+                lonGps = lon;
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Проверка наличия разрешений
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            return;
+        }
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+        manager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null);
+
+// Старт таймера
+//        startTime = SystemClock.uptimeMillis();
+//        customHandler.postDelayed(updateTimerThread, 0);
+//
+//        polzSogl();
+
+
+
+    }
+
+
+// Округление чисел: Метод Math.round()
+// https://www.internet-technologies.ru/articles/kak-v-java-okruglit-chislo-do-n-znakov-posle-zapyatoy.html
+
+    public static double roundAvoid(double value, int places) {
+        double scale = Math.pow(10, places);
+        return Math.round(value * scale) / scale;
     }
 
     // Кнопка SOS
