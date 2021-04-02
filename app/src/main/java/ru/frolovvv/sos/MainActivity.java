@@ -58,13 +58,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_PERMISSION_READ_EXTERNAL_STORAGE = 22;
     private static final int SEND_SMS_PERMISSION_REQUEST_CODE = 111;  // переменная для отправки смс
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 100;
+    private static final int MY_ACCESS_FINE_LOCATION = 33;
+    private static final int MY_ACCESS_COARSE_LOCATION = 44;
     private static final int MULTIPLE_PERMISSIONS = 77;
 
     String[] permissions = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.SEND_SMS,
-            Manifest.permission.CAMERA}; // Here i used multiple permission check
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION}; // Here i used multiple permission check}; // Here i used multiple permission check
 // MULTIPLE_PERMISSIONS - 1-я часть
 
     @Override
@@ -265,6 +269,8 @@ public class MainActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION_READ_EXTERNAL_STORAGE);
                     ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.SEND_SMS}, SEND_SMS_PERMISSION_REQUEST_CODE);
                     ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MY_ACCESS_FINE_LOCATION);
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, MY_ACCESS_COARSE_LOCATION);
                 }
                 return;
             }
