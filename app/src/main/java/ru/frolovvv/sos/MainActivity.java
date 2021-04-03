@@ -277,8 +277,14 @@ public class MainActivity extends AppCompatActivity {
             String[] toArr = {email1};
             m.setTo(toArr);
             m.setFrom("sos.mainfrend@gmail.com");
-            m.setSubject("SOS");
-            m.setBody(name + " - " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.");
+            m.setSubject(name + " - " + text);
+            // Это рабочая строчка
+            //m.setBody(name + " - " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.");
+
+
+            m.setBody("https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e");
+            // Это рабочий образец
+            //message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
 // Вложение файла заремлено
             try {
                 //m.addAttachment(strFilePathA);
@@ -316,8 +322,15 @@ public class MainActivity extends AppCompatActivity {
             String[] toArr = {email2};
             m.setTo(toArr);
             m.setFrom("sos.mainfrend@gmail.com");
-            m.setSubject("SOS");
-            m.setBody(name + " - " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.");
+            m.setSubject(name + " - " + text);
+            // Это рабочая строчка
+            //m.setBody(name + " - " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.");
+
+
+            m.setBody("https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e");
+            // Это рабочий образец
+            //message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
+
 // Вложение файла заремлено
             try {
                 //m.addAttachment(strFilePathA);
@@ -410,7 +423,16 @@ public class MainActivity extends AppCompatActivity {
         if(String.valueOf(latGps) == null && String.valueOf(lonGps) == null){
             message = " нажата кнопка SOS " + vrem + " " + name + " " + text;
         }else {
-            message = name + " здесь: " + latGps + " с.ш." + lonGps + " в.д.";
+            // это рабочая строчка
+            //message = name + " здесь: " + latGps + " с.ш." + latGps + " в.д.";
+
+            message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
+
+
+            // это все пробы
+            //String emailSubject = "https://www.google.ru/maps/place/54.768n, 32.069e";
+            //String emailSubject = "https://www.google.ru/maps/place/" + latLast1 + "n, " + lonLast1 + "e";
+            //String emailBody = " Результаты сканирования "  + vrem;
         }
 
 
@@ -441,7 +463,8 @@ public class MainActivity extends AppCompatActivity {
         if(String.valueOf(latGps) == null && String.valueOf(lonGps) == null){
             message = " нажата кнопка SOS " + vrem + " " + name + " " + text;
         }else {
-            message = name + " здесь: " + latGps + " с.ш." + lonGps + " в.д.";
+            //message = name + " здесь: " + latGps + " с.ш." + lonGps + " в.д.";
+            message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
         }
         String phoneNo2 = numberPhone2;
 
