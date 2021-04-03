@@ -5,5 +5,5 @@
     <string name="phoneEmail1">Укажите два E-mail на которые будут приходить сообщения при нажатии на кнопку SOS</string>
     <string name="name"> Ваше имя </string>
     <string name="text"> Текст сообщения </string>
-
+    <string name="msg_switch_network">GPS выключен, включить?</string>
 </resources>

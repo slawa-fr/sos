@@ -38,6 +38,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+// Включить GPS если он не включен-1
+// https://ru.stackoverflow.com/questions/499751/%D0%94%D0%B8%D0%B0%D0%BB%D0%BE%D0%B3-%D1%81-%D0%BF%D1%80%D0%B5%D0%B4%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC-%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B8%D1%82%D1%8C-gps
+    private LocationManager locationManager;
+    public static boolean geolocationEnabled = false;
+
     private long startTime = 0L;
     private Handler customHandler = new Handler();
     long timeInMilliseconds = 0L;
@@ -98,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 // что-бы не включался экран блокировки
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+// Включить GPS если он не включен-2
+        checkLocationServiceEnabled();
 
 // MULTIPLE_PERMISSIONS - 2-я часть
 // https://legkovopros.ru/questions/25905/kak-zaprosit-neskol-ko-razreshenij-srazu-v-android-dublikat
@@ -541,4 +549,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+// Включить GPS если он не включен-3
+    private boolean checkLocationServiceEnabled() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        try {
+            geolocationEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception ex) {
+        }
+        return buildAlertMessageNoLocationService(geolocationEnabled);
+    }
+
+// Включить GPS если он не включен-4
+    private boolean buildAlertMessageNoLocationService(boolean network_enabled) {
+        String msg = !network_enabled ? getResources().getString(R.string.msg_switch_network) : null;
+
+        if (msg != null) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false)
+                    .setMessage(msg)
+                    .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    });
+            final AlertDialog alert = builder.create();
+            alert.show();
+            return true;
+        }
+        return false;
+    }
 }
