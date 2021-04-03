@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
         manager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null);
 
-        polzSogl();
+        //polzSogl();
     }
 
 // Сообщение о том что Пользовательское соглашение нарушено
@@ -278,13 +278,20 @@ public class MainActivity extends AppCompatActivity {
             m.setTo(toArr);
             m.setFrom("sos.mainfrend@gmail.com");
             m.setSubject(name + " - " + text);
-            // Это рабочая строчка
-            //m.setBody(name + " - " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.");
 
+            Date da = new Date();
+            final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
+            TextView textView2a = (TextView) findViewById(R.id.textView2a);
+            String tempA = textView2a.getText().toString();
+            //System.out.println("tempA= " + tempA);
+            if(tempA.equals("широта")){
+                // координат еще нет
+                m.setBody(name + " - " + text);
+            }else {
+                // координаты есть
+                m.setBody("https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e");
+            }
 
-            m.setBody("https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e");
-            // Это рабочий образец
-            //message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
 // Вложение файла заремлено
             try {
                 //m.addAttachment(strFilePathA);
@@ -323,13 +330,19 @@ public class MainActivity extends AppCompatActivity {
             m.setTo(toArr);
             m.setFrom("sos.mainfrend@gmail.com");
             m.setSubject(name + " - " + text);
-            // Это рабочая строчка
-            //m.setBody(name + " - " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.");
 
-
-            m.setBody("https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e");
-            // Это рабочий образец
-            //message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
+            Date da = new Date();
+            final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
+            TextView textView2a = (TextView) findViewById(R.id.textView2a);
+            String tempA = textView2a.getText().toString();
+            //System.out.println("tempA= " + tempA);
+            if(tempA.equals("широта")){
+                // координат еще нет
+                m.setBody(name + " - " + text);
+            }else {
+                // координаты есть
+                m.setBody("https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e");
+            }
 
 // Вложение файла заремлено
             try {
@@ -419,24 +432,16 @@ public class MainActivity extends AppCompatActivity {
     void upSms1() {
         Date da = new Date();
         final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
-        //String message = " нажата кнопка SOS " + vrem + " " + name + " " + text + " мои координаты: " + latGps + " с.ш." + lonGps + " в.д.";
-        if(String.valueOf(latGps) == null && String.valueOf(lonGps) == null){
+        TextView textView2a = (TextView) findViewById(R.id.textView2a);
+        String tempA = textView2a.getText().toString();
+        //System.out.println("tempA= " + tempA);
+        if(tempA.equals("широта")){
+            // координат еще нет
             message = " нажата кнопка SOS " + vrem + " " + name + " " + text;
         }else {
-            // это рабочая строчка
-            //message = name + " здесь: " + latGps + " с.ш." + latGps + " в.д.";
-
+            // координаты есть
             message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
-
-
-            // это все пробы
-            //String emailSubject = "https://www.google.ru/maps/place/54.768n, 32.069e";
-            //String emailSubject = "https://www.google.ru/maps/place/" + latLast1 + "n, " + lonLast1 + "e";
-            //String emailBody = " Результаты сканирования "  + vrem;
         }
-
-
-
         String phoneNo1 = numberPhone1;
         if (!TextUtils.isEmpty(phoneNo1)) {
             //System.out.println("1phoneNo= " + phoneNo1);
@@ -460,10 +465,14 @@ public class MainActivity extends AppCompatActivity {
     void upSms2() {
         Date da = new Date();
         final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
-        if(String.valueOf(latGps) == null && String.valueOf(lonGps) == null){
+        TextView textView2a = (TextView) findViewById(R.id.textView2a);
+        String tempA = textView2a.getText().toString();
+        //System.out.println("tempA= " + tempA);
+        if(tempA.equals("широта")){
+            // координат еще нет
             message = " нажата кнопка SOS " + vrem + " " + name + " " + text;
         }else {
-            //message = name + " здесь: " + latGps + " с.ш." + lonGps + " в.д.";
+            // координаты есть
             message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
         }
         String phoneNo2 = numberPhone2;
