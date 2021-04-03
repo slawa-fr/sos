@@ -63,14 +63,11 @@ public class MainActivity extends AppCompatActivity {
     public static  String name;
     public static  String text;
     public static  String message;
-
-
     public double latGps;
     public double lonGps;
-
     public boolean ttt;  // Переменная для смены картики при нажатии кнопки ImageView
 
-    // MULTIPLE_PERMISSIONS - 1-я часть
+// MULTIPLE_PERMISSIONS - 1-я часть
 // https://legkovopros.ru/questions/25905/kak-zaprosit-neskol-ko-razreshenij-srazu-v-android-dublikat
     private static final int RC_PERMISSION_WRITE_EXTERNAL_STORAGE = 11;
     private static final int RC_PERMISSION_READ_EXTERNAL_STORAGE = 22;
@@ -126,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
         TextView textView2a = (TextView) findViewById(R.id.textView2a);
         TextView textView3a = (TextView) findViewById(R.id.textView3a);
 
-
-
 // gps
 // http://streletzcoder.ru/rabotaem-s-gps-v-android-na-java/
 
@@ -168,14 +163,7 @@ public class MainActivity extends AppCompatActivity {
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
         manager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null);
 
-// Старт таймера
-//        startTime = SystemClock.uptimeMillis();
-//        customHandler.postDelayed(updateTimerThread, 0);
-//
         polzSogl();
-
-
-
     }
 
 // Сообщение о том что Пользовательское соглашение нарушено
@@ -204,10 +192,8 @@ public class MainActivity extends AppCompatActivity {
         return Math.round(value * scale) / scale;
     }
 
-    // Кнопка SOS
+// Кнопка SOS
     public void onClick1(View view) {
-
-
 
 // Смена картинки кнопки
         if(ttt == false){
@@ -232,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
 // Старт таймера
         ButtonStart();
 
-
         if(!numberPhone1.equals(""))
             upSms1();
         if(!numberPhone2.equals(""))
@@ -249,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         ButtonStart();
     }
 
-    // метод   старт
+// метод   старт
     void ButtonStart() {
 // таймер
 // https://www.cyberforum.ru/android-dev/thread1919287.html
@@ -262,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
         ButtonStop();
     }
 
-    // метод  стоп
+// метод  стоп
     void ButtonStop() {
         startTime = 0L;
         customHandler.removeCallbacks(updateTimerThread);
@@ -354,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    // MULTIPLE_PERMISSIONS - 3-я часть
+// MULTIPLE_PERMISSIONS - 3-я часть
 // https://legkovopros.ru/questions/25905/kak-zaprosit-neskol-ko-razreshenij-srazu-v-android-dublikat
     private void getCallDetails() {
         //Log.d(LOG_TAG, " Все разрешения имеются ");
@@ -408,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
     }
 // MULTIPLE_PERMISSIONS - 4-я часть
 
-    // метод для отправки смс - 1
+// метод для отправки смс - 1
     void upSms1() {
         Date da = new Date();
         final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
@@ -440,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // метод для отправки смс - 2
+// метод для отправки смс - 2
     void upSms2() {
         Date da = new Date();
         final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
@@ -490,7 +475,7 @@ public class MainActivity extends AppCompatActivity {
         text = saveText16;
     }
 
-    // Кнопка - НАСТРОЙКИ
+// Кнопка - НАСТРОЙКИ
     public void onClick2(View view) {
         Intent intent = new Intent(this, Main1Activity.class);
         startActivity(intent);
@@ -538,14 +523,11 @@ public class MainActivity extends AppCompatActivity {
             startTime = SystemClock.uptimeMillis();
             customHandler.postDelayed(updateTimerThread, 0);
             System.out.println("координат еще нет_tempA= " + tempA);
-//            TextView textView2 = (TextView) findViewById(R.id.textView2);
-//            textView2.setText(" - ");
+
         }else {
             // координаты есть
             System.out.println("координаты есть_tempA= " + tempA);
             ButtonStop();
-//            TextView textView3a = (TextView) findViewById(R.id.textView3a);
-//            textView3a.setText("OK");
             if(!numberPhone1.equals(""))
                 upSms1();
             if(!numberPhone2.equals(""))
