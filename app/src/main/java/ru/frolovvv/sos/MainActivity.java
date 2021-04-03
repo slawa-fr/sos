@@ -229,9 +229,8 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(this, " 2 нужно заполнить хотябы одно поле в настройках ", Toast.LENGTH_LONG).show();
         }
 
-        // Старт таймера
-        startTime = SystemClock.uptimeMillis();
-        customHandler.postDelayed(updateTimerThread, 0);
+// Старт таймера
+        ButtonStart();
 
 
         if(!numberPhone1.equals(""))
@@ -242,6 +241,31 @@ public class MainActivity extends AppCompatActivity {
             new AsyncRequest1().execute("123", "/ajax", "foo=bar");
         if(!email2.equals(""))
             new AsyncRequest2().execute("123", "/ajax", "foo=bar");
+    }
+
+
+// Кнопка Старт
+    public void onClickStart(View view) {
+        ButtonStart();
+    }
+
+    // метод   старт
+    void ButtonStart() {
+// таймер
+// https://www.cyberforum.ru/android-dev/thread1919287.html
+        startTime = SystemClock.uptimeMillis();
+        customHandler.postDelayed(updateTimerThread, 0);
+    }
+
+// Кнопка стоп
+    public void onClickStop(View view) {
+        ButtonStop();
+    }
+
+    // метод  стоп
+    void ButtonStop() {
+        startTime = 0L;
+        customHandler.removeCallbacks(updateTimerThread);
     }
 
 
@@ -491,30 +515,35 @@ public class MainActivity extends AppCompatActivity {
 
             customHandler.postDelayed(this, 0);
 
-            if (secs >= 3) {   // step
+            if (secs >= 10) {   // step
 // Сканируем GPS Каждые 3 секунды
                 startTime = 0L;
                 customHandler.removeCallbacks(updateTimerThread);
                 //scanGps();
-                koordinatyOK();
-                startTime = SystemClock.uptimeMillis();
-                customHandler.postDelayed(updateTimerThread, 0);
+                CheckKoordinat();
+//                startTime = SystemClock.uptimeMillis();
+//                customHandler.postDelayed(updateTimerThread, 0);
             }
         }
     };
 
-    void koordinatyOK(){
+// Проверка, что координаты определились и выводятся в текстовые поля
+    void CheckKoordinat(){
         TextView textView2a = (TextView) findViewById(R.id.textView2a);
         String tempA = textView2a.getText().toString();
+        System.out.println("tempA= " + tempA);
 
         if(tempA.equals("широта")){
             // координат еще нет
+            startTime = SystemClock.uptimeMillis();
+            customHandler.postDelayed(updateTimerThread, 0);
+            System.out.println("координат еще нет_tempA= " + tempA);
 //            TextView textView2 = (TextView) findViewById(R.id.textView2);
 //            textView2.setText(" - ");
         }else {
             // координаты есть
-            startTime = 0L;
-            customHandler.removeCallbacks(updateTimerThread);
+            System.out.println("координаты есть_tempA= " + tempA);
+            ButtonStop();
 //            TextView textView3a = (TextView) findViewById(R.id.textView3a);
 //            textView3a.setText("OK");
             if(!numberPhone1.equals(""))
