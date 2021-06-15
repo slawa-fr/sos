@@ -36,7 +36,7 @@ import java.util.List;
 // https://qastack.ru/programming/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a
 // Вот альтернативная версия, которая также работает для меня и имеет вложения
 
-
+//https://fooobar.com/questions/58820/put-buttons-at-bottom-of-screen-with-linearlayout
 // Прижать последний LinearLayout к низу экрана:
 //                android:layout_weight="1"
 //                android:gravity="center|bottom"
