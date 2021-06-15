@@ -36,6 +36,11 @@ import java.util.List;
 // https://qastack.ru/programming/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a
 // Вот альтернативная версия, которая также работает для меня и имеет вложения
 
+
+// Прижать последний LinearLayout к низу экрана:
+//                android:layout_weight="1"
+//                android:gravity="center|bottom"
+
 public class MainActivity extends AppCompatActivity {
 
 // Включить GPS если он не включен-1
