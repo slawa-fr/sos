@@ -19,6 +19,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.Date;
 
 public class Main1Activity extends AppCompatActivity {
@@ -43,10 +48,31 @@ public class Main1Activity extends AppCompatActivity {
     public static  String name;
     public static  String text;
 
+    private AdView adView;                 // рекламный баннер
+    private AdView adView2;                 // рекламный баннер
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
+
+
+// Рекламный баннер - начало
+        //MobileAds.initialize(this, "Идентификатор приложения");
+        MobileAds.initialize(this, "ca-app-pub-6255050935881113~8895524538");
+        adView = findViewById(R.id.adView);
+        AdRequest adRequest1 = new AdRequest.Builder().build();
+        adView.loadAd(adRequest1);
+// Рекламный баннер - конец
+
+// Рекламный баннер - начало
+        //MobileAds.initialize(this, "Идентификатор приложения");
+        MobileAds.initialize(this, "ca-app-pub-6255050935881113~8895524538");
+        adView2 = findViewById(R.id.adView2);
+        AdRequest adRequest2 = new AdRequest.Builder().build();
+        adView2.loadAd(adRequest2);
+// Рекламный баннер - конец
+
 
 //Заблокировать ориентацию экрана
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
