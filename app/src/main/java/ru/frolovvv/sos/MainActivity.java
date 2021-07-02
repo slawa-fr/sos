@@ -277,11 +277,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... arg) {
             //System.out.println("Запущен другой поток - AsyncRequest");
-            Mail m = new Mail("sos.mainfrend@gmail.com", "[********]");
+            Mail m = new Mail("sos.mainfrend@mail.ru", "Vjqlheu12");
             //System.out.println("email1=" + email1);
             String[] toArr = {email1};
             m.setTo(toArr);
-            m.setFrom("sos.mainfrend@gmail.com");
+            m.setFrom("sos.mainfrend@mail.ru");
             m.setSubject(name + " - " + text);
 
             Date da = new Date();
@@ -329,11 +329,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... arg) {
             //System.out.println("Запущен другой поток - AsyncRequest");
-            Mail m = new Mail("sos.mainfrend@gmail.com", "[********]");
+            Mail m = new Mail("sos.mainfrend@mail.ru", "Vjqlheu12");
             //System.out.println("email2=" + email2);
             String[] toArr = {email2};
             m.setTo(toArr);
-            m.setFrom("sos.mainfrend@gmail.com");
+            m.setFrom("sos.mainfrend@mail.ru");
             m.setSubject(name + " - " + text);
 
             Date da = new Date();
