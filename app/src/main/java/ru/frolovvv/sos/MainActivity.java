@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... arg) {
             //System.out.println("Запущен другой поток - AsyncRequest");
-            Mail m = new Mail("sos.mainfrend@mail.ru", "Vjqlheu12");
+            Mail m = new Mail("sos.mainfrend@mail.ru", "Yflt;ysqGfhjkm12");
             //System.out.println("email1=" + email1);
             String[] toArr = {email1};
             m.setTo(toArr);

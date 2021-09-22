@@ -228,11 +228,11 @@ public class Main1Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... arg) {
             //System.out.println("Запущен другой поток - AsyncRequest");
-            Mail m = new Mail("sos.mainfrend@gmail.com", "[********]");
+            Mail m = new Mail("sos.mainfrend@mail.ru", "Yflt;ysqGfhjkm12");
             System.out.println("email1=" + email1);
             String[] toArr = {email1};
             m.setTo(toArr);
-            m.setFrom("sos.mainfrend@gmail.com");
+            m.setFrom("sos.mainfrend@mail.ru");
             m.setSubject("SOS");
             m.setBody("Это Я " + name + " - " + text);
 // Вложение файла заремлено
