@@ -40,6 +40,8 @@ import java.util.List;
 // Прижать последний LinearLayout к низу экрана:
 //                android:layout_weight="1"
 //                android:gravity="center|bottom"
+// 02.11.2021-заблокировали доступ к почте, после восстановления пришлось установить новый пароль
+// И создать отдельный пароль для внешних приложений
 
 public class MainActivity extends AppCompatActivity {
 
@@ -277,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... arg) {
             //System.out.println("Запущен другой поток - AsyncRequest");
-            Mail m = new Mail("sos.mainfrend@mail.ru", "Yflt;ysqGfhjkm12");
+            Mail m = new Mail("sos.mainfrend@mail.ru", "br9z6Sc3G7cGehJjYBnR");
             //System.out.println("email1=" + email1);
             String[] toArr = {email1};
             m.setTo(toArr);
@@ -329,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... arg) {
             //System.out.println("Запущен другой поток - AsyncRequest");
-            Mail m = new Mail("sos.mainfrend@mail.ru", "Vjqlheu12");
+            Mail m = new Mail("sos.mainfrend@mail.ru", "br9z6Sc3G7cGehJjYBnR");
             //System.out.println("email2=" + email2);
             String[] toArr = {email2};
             m.setTo(toArr);
