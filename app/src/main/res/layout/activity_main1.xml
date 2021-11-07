@@ -151,6 +151,45 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView110c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="3"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <EditText
+                android:id="@+id/editText11aa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/background_light"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="phone"
+                android:textColor="@android:color/background_dark"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/sms3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:onClick="onClickSms3"
+                android:text="Проверить"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

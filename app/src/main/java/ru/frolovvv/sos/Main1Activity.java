@@ -1,6 +1,5 @@
 package ru.frolovvv.sos;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +18,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-
 import java.util.Date;
 
 public class Main1Activity extends AppCompatActivity {
@@ -34,15 +31,18 @@ public class Main1Activity extends AppCompatActivity {
     SharedPreferences mySP14;   //для сохранения значения в Preferences переменной
     SharedPreferences mySP15;   //для сохранения значения в Preferences переменной
     SharedPreferences mySP16;   //для сохранения значения в Preferences переменной
+    SharedPreferences mySP17;   //для сохранения значения в Preferences переменной
     String SAVE_TEXT11 = "save text11";   //для сохранения значения в Preferences
     String SAVE_TEXT12 = "save text12";   //для сохранения значения в Preferences
     String SAVE_TEXT13 = "save text13";   //для сохранения значения в Preferences
     String SAVE_TEXT14 = "save text14";   //для сохранения значения в Preferences
     String SAVE_TEXT15 = "save text15";   //для сохранения значения в Preferences
     String SAVE_TEXT16 = "save text16";   //для сохранения значения в Preferences
+    String SAVE_TEXT17 = "save text17";   //для сохранения значения в Preferences
 
     public static  String numberPhone1;
     public static  String numberPhone2;
+    public static  String numberPhone3;
     public static  String email1;
     public static  String email2;
     public static  String name;
@@ -55,7 +55,6 @@ public class Main1Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
-
 
 // Рекламный баннер - начало
         //MobileAds.initialize(this, "Идентификатор приложения");
@@ -85,6 +84,7 @@ public class Main1Activity extends AppCompatActivity {
 
         EditText editText11 = (EditText) findViewById(R.id.editText11);
         EditText editText11a = (EditText) findViewById(R.id.editText11a);
+        EditText editText11aa = (EditText) findViewById(R.id.editText11aa);
         EditText editText12 = (EditText) findViewById(R.id.editText12);
         EditText editText12a = (EditText) findViewById(R.id.editText12a);
         EditText editText13 = (EditText) findViewById(R.id.editText13);
@@ -92,6 +92,7 @@ public class Main1Activity extends AppCompatActivity {
 
         Button sms1 = (Button) findViewById(R.id.sms1);
         Button sms2 = (Button) findViewById(R.id.sms2);
+        Button sms3 = (Button) findViewById(R.id.sms3);
         Button email1 = (Button) findViewById(R.id.email1);
         Button email2 = (Button) findViewById(R.id.email2);
         Button buttonBack = (Button) findViewById(R.id.buttonBack);
@@ -101,6 +102,7 @@ public class Main1Activity extends AppCompatActivity {
 // Убрать фокус
         editText11.clearFocus();
         editText11a.clearFocus();
+        editText11aa.clearFocus();
         editText12.clearFocus();
         editText12a.clearFocus();
         editText13.clearFocus();
@@ -156,6 +158,31 @@ public class Main1Activity extends AppCompatActivity {
         }
     }
 
+// Кнопка проверить отправку смс 3
+    public void onClickSms3(View view) {
+// проверка на введен ли правильно телефон
+        EditText editText11aa = (EditText) findViewById(R.id.editText11aa);
+        CharSequence temp_emilID=editText11aa.getText().toString();
+        if(!isValidPhone(temp_emilID))
+        {
+            editText11aa.requestFocus();
+            editText11aa.setError("введите номер телефона");
+            Toast.makeText(this, " Укажите номер телефона ", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+// после ввода номера телефона и нажатии на кнопку проверить - клавиатура убирается с экрана
+// https://qna.habr.com/q/50240
+            //EditText editText12 = (EditText) findViewById(R.id.editText12);
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editText11aa.getWindowToken(), 0);
+            savePref();
+            upSms3();
+            //Toast.makeText(this, " если нужно отправлять СМС, скачайте версию программы с яндекс-диска, ссылка в описании ", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 // проверка на введен ли правильно телефон
     public final static boolean isValidPhone(CharSequence target) {
         return !TextUtils.isEmpty(target) && Patterns.PHONE.matcher(target).matches();
@@ -206,6 +233,25 @@ public class Main1Activity extends AppCompatActivity {
 
     }
 
+// метод для отправки смс, срабатывает когда выбран радиобуттон sms и есть движение вкадре
+    void upSms3() {
+        Date da = new Date();
+        final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
+        String message = " нажата кнопка SOS " + vrem + " " + text;
+        String phoneNo3 = numberPhone3;
+
+        if (!TextUtils.isEmpty(phoneNo3)) {
+            System.out.println("1phoneNo= " + phoneNo3);
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo3, null, message, null, null);
+        }else{
+            System.out.println("2phoneNo= " + phoneNo3);
+//            Toast toast = Toast.makeText(getApplicationContext(), " Укажите номер телефона на который будут приходить СМС-сообщения ", Toast.LENGTH_LONG);
+//            toast.show();
+        }
+
+    }
+
     public void onClickEmail1(View view) {
         savePref();
         EditText editText12 = (EditText) findViewById(R.id.editText12);
@@ -228,7 +274,7 @@ public class Main1Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... arg) {
             //System.out.println("Запущен другой поток - AsyncRequest");
-            Mail m = new Mail("sos.mainfrend@mail.ru", "Yflt;ysqGfhjkm12");
+            Mail m = new Mail("sos.mainfrend@mail.ru", "br9z6Sc3G7cGehJjYBnR");
             System.out.println("email1=" + email1);
             String[] toArr = {email1};
             m.setTo(toArr);
@@ -270,11 +316,11 @@ public class Main1Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... arg) {
             //System.out.println("Запущен другой поток - AsyncRequest");
-            Mail m = new Mail("sos.mainfrend@gmail.com", "[********]");
+            Mail m = new Mail("sos.mainfrend@mail.ru", "br9z6Sc3G7cGehJjYBnR");
             System.out.println("email2=" + email2);
             String[] toArr = {email2};
             m.setTo(toArr);
-            m.setFrom("sos.mainfrend@gmail.com");
+            m.setFrom("sos.mainfrend@mail.ru");
             m.setSubject("SOS");
             m.setBody("Это Я " + name + " - " + text);
 // Вложение файла заремлено
@@ -317,6 +363,11 @@ public class Main1Activity extends AppCompatActivity {
         EditText editText11a = (EditText) findViewById(R.id.editText11a);
         ed2.putString(SAVE_TEXT12,editText11a.getText().toString());
 
+        mySP17 = getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor ed7 = mySP17.edit();
+        EditText editText11aa = (EditText) findViewById(R.id.editText11aa);
+        ed7.putString(SAVE_TEXT17,editText11aa.getText().toString());
+
         mySP13 = getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor ed3 = mySP13.edit();
         EditText editText12 = (EditText) findViewById(R.id.editText12);
@@ -343,6 +394,7 @@ public class Main1Activity extends AppCompatActivity {
         ed4.apply();
         ed5.apply();
         ed6.apply();
+        ed7.apply();
     }
 
     void loadPref(){
@@ -357,6 +409,12 @@ public class Main1Activity extends AppCompatActivity {
         EditText editText11a = (EditText) findViewById(R.id.editText11a);
         editText11a.setText(saveText12);
         numberPhone2 = editText11a.getText().toString();
+
+        mySP17 = getSharedPreferences("MyPref", MODE_PRIVATE);
+        String saveText17 = mySP17.getString(SAVE_TEXT17, "" );
+        EditText editText11aa = (EditText) findViewById(R.id.editText11aa);
+        editText11aa.setText(saveText17);
+        numberPhone3 = editText11aa.getText().toString();
 
         mySP13 = getSharedPreferences("MyPref", MODE_PRIVATE);
         String saveText13 = mySP13.getString(SAVE_TEXT13, "" );
@@ -385,6 +443,10 @@ public class Main1Activity extends AppCompatActivity {
 
 // Кнопка - Сохранить
     public void onClick4(View view) {
+        EditText editText13 = (EditText) findViewById(R.id.editText13);
+        EditText editText14 = (EditText) findViewById(R.id.editText14);
+        name = editText13.getText().toString();
+        text = editText14.getText().toString();
         savePref();
     }
 

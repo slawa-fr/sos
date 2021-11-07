@@ -62,15 +62,18 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences mySP14;
     SharedPreferences mySP15;
     SharedPreferences mySP16;
+    SharedPreferences mySP17;
     String SAVE_TEXT11 = "save text11";
     String SAVE_TEXT12 = "save text12";
     String SAVE_TEXT13 = "save text13";
     String SAVE_TEXT14 = "save text14";
     String SAVE_TEXT15 = "save text15";
     String SAVE_TEXT16 = "save text16";
+    String SAVE_TEXT17 = "save text17";
 
     public static  String numberPhone1;
     public static  String numberPhone2;
+    public static  String numberPhone3;
     public static  String email1;
     public static  String email2;
     public static  String name;
@@ -127,13 +130,16 @@ public class MainActivity extends AppCompatActivity {
         TextView textView22 = (TextView) findViewById(R.id.textView22);
         TextView textView23 = (TextView) findViewById(R.id.textView23);
         TextView textView24 = (TextView) findViewById(R.id.textView24);
+        TextView textView25 = (TextView) findViewById(R.id.textView25);
 
         loadPref();
         //System.out.println(numberPhone1 + numberPhone2 + email1 + email2 + name + text);
         textView21.setText("тел. 1: " + numberPhone1);
         textView22.setText("тел. 2: " + numberPhone2);
+        textView25.setText("тел. 3: " + numberPhone3);
         textView23.setText("E-mail 1: " + email1);
         textView24.setText("E-mail 2: " + email2);
+
 
 // Широта и долшота
         TextView textView2a = (TextView) findViewById(R.id.textView2a);
@@ -223,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //System.out.println(numberPhone1 + numberPhone2 + email1 + email2 + name + text);
-        if(numberPhone1.equals("") && numberPhone2.equals("") && email1.equals("") && email2.equals("")){
+        if(numberPhone1.equals("") && numberPhone2.equals("")  && numberPhone3.equals("") && email1.equals("") && email2.equals("")){
             // не введено ни одно значение - выведем тост
             Toast.makeText(this, " нужно заполнить хотябы одно поле в настройках ", Toast.LENGTH_LONG).show();
         }   else {
@@ -238,6 +244,8 @@ public class MainActivity extends AppCompatActivity {
             upSms1();
         if(!numberPhone2.equals(""))
             upSms2();
+        if(!numberPhone3.equals(""))
+            upSms3();
         if(!email1.equals(""))
             new AsyncRequest1().execute("123", "/ajax", "foo=bar");
         if(!email2.equals(""))
@@ -497,6 +505,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+// метод для отправки смс - 3
+    void upSms3() {
+        Date da = new Date();
+        final CharSequence vrem = DateFormat.format("hh:mm:ss_dd.MM.yyyy", da.getTime());
+        TextView textView2a = (TextView) findViewById(R.id.textView2a);
+        String tempA = textView2a.getText().toString();
+        //System.out.println("tempA= " + tempA);
+        if(tempA.equals("широта")){
+            // координат еще нет
+            message = " нажата кнопка SOS " + vrem + " " + name + " " + text;
+        }else {
+            // координаты есть
+            message = "https://www.google.ru/maps/place/" + latGps + "n," + lonGps + "e";
+        }
+        String phoneNo3 = numberPhone3;
+
+        if (!TextUtils.isEmpty(phoneNo3)) {
+            //System.out.println("1phoneNo= " + phoneNo2);
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo3, null, message, null, null);
+        }else{
+            //System.out.println("2phoneNo= " + phoneNo2);
+//            Toast toast = Toast.makeText(getApplicationContext(), " Укажите номер телефона на который будут приходить СМС-сообщения ", Toast.LENGTH_LONG);
+//            toast.show();
+        }
+
+    }
+
+
     void loadPref(){
         mySP11 = getSharedPreferences("MyPref", MODE_PRIVATE);
         String saveText11 = mySP11.getString(SAVE_TEXT11, "" );
@@ -505,6 +542,10 @@ public class MainActivity extends AppCompatActivity {
         mySP12 = getSharedPreferences("MyPref", MODE_PRIVATE);
         String saveText12 = mySP12.getString(SAVE_TEXT12, "" );
         numberPhone2 = saveText12;
+
+        mySP17 = getSharedPreferences("MyPref", MODE_PRIVATE);
+        String saveText17 = mySP17.getString(SAVE_TEXT17, "" );
+        numberPhone3 = saveText17;
 
         mySP13 = getSharedPreferences("MyPref", MODE_PRIVATE);
         String saveText13 = mySP13.getString(SAVE_TEXT13, "" );
@@ -521,6 +562,7 @@ public class MainActivity extends AppCompatActivity {
         mySP16 = getSharedPreferences("MyPref", MODE_PRIVATE);
         String saveText16 = mySP16.getString(SAVE_TEXT16, "" );
         text = saveText16;
+
     }
 
 // Кнопка - НАСТРОЙКИ
@@ -580,6 +622,8 @@ public class MainActivity extends AppCompatActivity {
                 upSms1();
             if(!numberPhone2.equals(""))
                 upSms2();
+            if(!numberPhone3.equals(""))
+                upSms3();
             if(!email1.equals(""))
                 new AsyncRequest1().execute("123", "/ajax", "foo=bar");
             if(!email2.equals(""))
